@@ -1,26 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Patrick Hand', cursive;
+  background-color: #fff0f5;
+  color: #333;
+}
+
+/* From Uiverse.io by Gautammsharma */ 
+.comic-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 24px;
+  font-family: 'Patrick Hand', cursive;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #d86a8f;
+  border: 2px solid #000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.comic-button:hover {
+  background-color: #fff;
+  color: #d47091;
+  border: 2px solid #efb7ca;
+  box-shadow: 5px 5px 0px #efb7ca;
+}
+
+.comic-button:active {
+  background-color: #fcf414;
+  box-shadow: none;
+  transform: translateY(4px);
 }
