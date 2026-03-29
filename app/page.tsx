@@ -5,6 +5,7 @@ import confetti from "canvas-confetti";
 const page = () => {
   const [laCount, setLaCount] = useState(0);
   const [isAhPressed, setIsAhPressed] = useState(false);
+  const [laPosition, setLaPosition] = useState<{ x: number | null; y: number | null }>({ x: null, y: null });
 
   const messages = [
     "Katbghini? 🥺",
@@ -21,6 +22,24 @@ const page = () => {
 
   const handleLaClick = () => {
     setLaCount(laCount + 1);
+  };
+
+  const handleLaHover = () => {
+    if (typeof window === 'undefined') return;
+    
+    // Keep it relatively close to the center (within +/- 250px)
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const range = 250;
+    
+    let randomX = centerX - range + Math.random() * (range * 2);
+    let randomY = centerY - range + Math.random() * (range * 2);
+    
+    // Make sure it doesn't accidentally clip off tight mobile screens
+    randomX = Math.max(10, Math.min(window.innerWidth - 100, randomX));
+    randomY = Math.max(10, Math.min(window.innerHeight - 50, randomY));
+    
+    setLaPosition({ x: Math.floor(randomX), y: Math.floor(randomY) });
   };
 
   const handleAhClick = () => {
@@ -67,8 +86,12 @@ const page = () => {
 
   return (
     <div className="flex w-screen h-screen mx-auto flex-col justify-center items-center p-4">
-      <div>
-        <img src="/katbghini.png" className="h-60" alt="katbghini" />
+      <div className="flex justify-center items-center w-full min-h-[300px]">
+        <img 
+          src={isAhPressed ? "/love.gif" : "/f.gif"} 
+          className={isAhPressed ? "h-64 object-contain" : "h-60 object-contain"} 
+          alt={isAhPressed ? "love" : "f"} 
+        />
       </div>
       
       {isAhPressed ? (
@@ -91,7 +114,13 @@ const page = () => {
             <button 
               className="comic-button bg-[#d86a8f] min-w-[80px]" 
               onClick={handleLaClick}
+              onMouseEnter={handleLaHover}
               style={{
+                ...(laPosition.x !== null && laPosition.y !== null ? {
+                    position: 'fixed',
+                    left: `${laPosition.x}px`,
+                    top: `${laPosition.y}px`,
+                } : {}),
                 transform: `scale(${Math.max(1 - laCount * 0.05, 0.5)})`,
                 transition: 'all 0.3s ease'
               }}
